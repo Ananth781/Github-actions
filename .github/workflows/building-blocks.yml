@@ -3,42 +3,25 @@ name: 01 - Building Blocks
 on: push
 
 jobs:
- 
+
   hello:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Hello - world"
 
-   runs-on: ubuntu latest
+  good_bye:
+    runs-on: ubuntu-latest
+    steps:
+      # First step fails initially
+      - name: Failed step
+        run: |
+          echo "I will fail"
+          exit 1
 
-   steps:
+      - name: Say goodbye  # Second step
+        run: echo "Goodbye"
 
-    -run: echo "Hellow  -world"
-
-good bye:
-
- runs-on: ubuntu-latest
-
- steps:
-
-  # First step fails initally
-
-  - name: Failed step # First step
-
-    run: |
-
-     echo "I will fail"
-
-     exit 1
-
-   - name: Say gooodbye  # Second step
-   
-     run: echo "Good bye"
-
-    - name: Succeeding step (updated version) 
-      run: |
-
-        echo "This will now succeed"
-
-        exit 0
-        
-     
-
- 
+      - name: Succeeding step (updated version)
+        run: |
+          echo "This will now succeed"
+          exit 0

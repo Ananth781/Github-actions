@@ -1,8 +1,8 @@
 name: 02 - Workflow Events
-
+ 
 on:
   workflow_dispatch: # Manual trigger from GitHub UI
-
+ 
 jobs:
   echo:
     runs-on: ubuntu-latest

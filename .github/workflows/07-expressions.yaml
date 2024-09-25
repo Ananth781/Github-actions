@@ -1,13 +1,14 @@
 name: 07 - Using Expressions
 
 on:
-  push:
-  workflow_dispatch:
+  push:  # Trigger on push event
+  workflow_dispatch:  # Trigger manually via the UI
     inputs:
       debug:
         description: 'Enable debug mode'
         type: boolean
         default: false
+
 
 jobs:
   echo:

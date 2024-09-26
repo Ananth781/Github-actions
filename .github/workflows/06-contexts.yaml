@@ -1,22 +1,40 @@
-name: 06 - Contexts
+name: 07 - Using Expressions
 
 on:
-  push:
-  workflow_dispatch:
+  push:  # Trigger on push event
+  workflow_dispatch:  # Trigger manually via the UI
+    inputs:
+      debug:
+        description: 'Enable debug mode'
+        type: boolean
+        default: false
 
 jobs:
-  echo-data:
+  echo:
     runs-on: ubuntu-latest
     steps:
-      - name: Display Information
-        run: |
-          echo "Event name: ${{ github.event_name }}"
-          echo "Ref: ${{ github.ref }}"
-          echo "SHA: ${{ github.sha }}"
-          echo "Actor: ${{ github.actor }}"
-          echo "Workflow: ${{ github.workflow }}"
-          echo "Run ID: ${{ github.run_id }}"
-          echo "Run number: ${{ github.run_number }}"
+      # Log the value of the debug input
+      - name: "Check Debug Input"
+        run: echo "Debug mode is set to: ${{ inputs.debug }}"
 
-      - name: Retrieve Variable
-        run: echo "MY_VAR: ${{ secrets.MY_VAR }}"
+      # Log the branch being used
+      - name: "Check GitHub Ref"
+        run: echo "GitHub ref: ${{ github.ref }}"
+
+      # Step 1: Conditionally print debug information
+      - name: "[debug] Print start-up data"
+        if: ${{ inputs.debug == 'true' }}
+        run: |
+          echo "Triggered by: ${{ github.event_name }}"
+          echo "Branch: ${{ github.ref }}"
+          echo "Commit SHA: ${{ github.sha }}"
+          echo "Runner OS: ${{ runner.os }}"
+
+      # Step 2: Conditionally print if triggered from main branch
+      - name: "[debug] Print when triggered from main"
+        if: ${{ inputs.debug == 'true' && github.ref == 'refs/heads/main' }}
+        run: echo "I was triggered from main"
+
+      # Step 3: Print a greeting message
+      - name: Greeting
+        run: echo "Hello, world"

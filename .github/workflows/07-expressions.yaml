@@ -9,11 +9,18 @@ on:
         type: boolean
         default: false
 
-
 jobs:
   echo:
     runs-on: ubuntu-latest
     steps:
+      # Log the value of the debug input
+      - name: "Check Debug Input"
+        run: echo "Debug mode is set to: ${{ inputs.debug }}"
+
+      # Log the branch being used
+      - name: "Check GitHub Ref"
+        run: echo "GitHub ref: ${{ github.ref }}"
+
       # Step 1: Conditionally print debug information
       - name: "[debug] Print start-up data"
         if: ${{ inputs.debug == 'true' }}
